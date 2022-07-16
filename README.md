@@ -18,12 +18,15 @@ origin = [
 ]
 
 result = filter_by_first_met_value(origin, ["foo", "bar"])
+
 # result -> [
 #     {"foo": "FOO", "bar": "BAR", "foobar": "fb"},
 #     {"foo": "F", "bar": "BAR", "foobar": "fb"},
 # ]
+
 result = filter_by_first_met_value(origin, ["foobar"])
 # result -> [{"foo": "FOO", "bar": "BAR", "foobar": "fb"}]
+
 result = filter_by_first_met_value(origin, ["bar", "foobar"])
 # result -> [{"foo": "FOO", "bar": "BAR", "foobar": "fb"}]
 
