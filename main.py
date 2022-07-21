@@ -11,7 +11,6 @@ def find_uniq(dataset: List[int]) -> int:
 
     for key, value in dict_dataset.items():
         if value == 1:
-            print(f"доп память сайз: {str(sys.getsizeof(dict_dataset))}")
             return key
 
 
