@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from homework_5.views import home, article, password_check, password_generate
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home),
+    path('home', home),
+    path('homepage', home),
+    path('article/<int:article_id>/<slug:article_slug>', article),
+    path('password/<slug:password>', password_check),
+    path('password/generate/<int:length>', password_generate),
 ]
