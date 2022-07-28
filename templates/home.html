@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 style="text-align: center; margin-top: 20px">Homepage</h1>
+
+    {% for item in products %}
+        <div>
+            <a href="{{ item.slug }}">
+                {{ item.product }}
+            </a>
+        </div>
+     {% endfor %}
+
+{% endblock %}
