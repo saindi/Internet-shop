@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1 style="text-align: center; margin-top: 20px">Homepage</h1>
+
+    <div class="row">
+    {% for item in products %}
+        <div class="col-sm" style="margin: 45px 0px">
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top" src="{% static '/img/nikon.jpg'%}" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Фотоаппарат</h5>
+                <p class="card-text">{{ item.product }}</p>
+                <a href="{{ item.slug }}" class="btn btn-primary">Подробнее</a>
+              </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}

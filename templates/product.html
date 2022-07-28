@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <h1 style="text-align: center; margin-top: 20px">Product page</h1>
+
+    <div>
+        {{ product_info.product }}<br>{{ product_info.description }}<br>{{ product_info.price }}
+    </div>
+
+    {% if product_info.available %}
+        <button>Купить</button>
+    {% else %}
+        <button disabled>Купить</button>
+    {% endif %}
+
+{% endblock %}
