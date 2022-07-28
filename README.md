@@ -51,3 +51,5 @@
   - https://getbootstrap.com/
   - https://materializecss.com/
   - будь який інший, до якого лежить душа
+
+В файле temp.py содержатся список пользователей и товара. current_user - текущий пользователь
