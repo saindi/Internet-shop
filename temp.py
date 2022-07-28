@@ -14,7 +14,7 @@ users = [
 ]
 
 
-current_user: int = 1
+current_user: int = 0
 
 
 products = [
