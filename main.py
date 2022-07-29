@@ -1,6 +1,4 @@
 from typing import List
-import sys
-import time
 
 
 def find_uniq(dataset: List[int]) -> int:
@@ -15,9 +13,5 @@ def find_uniq(dataset: List[int]) -> int:
 
 
 if __name__ == "__main__":
-    with open("test1.txt", "r", encoding="utf-8") as file:
-        test_list = list(map(int, file.read().split()))
-
-    start_time = time.time()
-    print(f"answer = {find_uniq(test_list)}")
-    print("--- %s seconds ---\n" % (time.time() - start_time))
+    print(find_uniq([1, 2, 3, 2, 1]))
+    print(find_uniq([54, 90, 52, 10, 62, 54, 90, 52, 10, 62, 42]))
