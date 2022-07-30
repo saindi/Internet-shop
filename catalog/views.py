@@ -3,7 +3,7 @@ from django.shortcuts import render
 from temp import users, current_user, products
 
 
-def homepage(request: HttpRequest) -> HttpResponse:
+def home_page(request: HttpRequest) -> HttpResponse:
     return render(request, 'home.html', {"user_name": users[current_user]["username"],
                                          "products": products})
 
