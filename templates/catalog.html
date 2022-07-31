@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1 style="text-align: center; margin-top: 20px">Cataloge</h1>
+
+    <div class="row">
+    {% for product in products %}
+        <div class="col-sm" style="margin: 45px 0px">
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top" src="{% static product.img %}" alt="Image product">
+              <div class="card-body">
+                  {% for category in categorys%}
+                      {% if category.slug == product.category_id %}
+                        <h5 class="card-title">{{ category.name }}</h5>
+                      {% endif %}
+                  {% endfor %}
+                <p class="card-text">{{ product.name }}</p>
+                <a href="{{ product.slug }}" class="btn btn-primary">Подробнее</a>
+              </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}
