@@ -8,7 +8,7 @@
     {% for product in products %}
         <div class="col-sm" style="margin: 45px 0px">
             <div class="card" style="width: 18rem;">
-              <img class="card-img-top" src="{% static product.img %}" alt="Image product">
+              <img class="card-img-top" src="{{ product.img.url }}" alt="{{ product.img.url }}">
               <div class="card-body">
                   {% for category in categorys%}
                       {% if category.slug == product.category_id %}

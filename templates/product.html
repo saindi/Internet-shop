@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
 {% block content %}
     <section class="section">
         <div class="container">
@@ -9,7 +8,7 @@
 
             <div>
                 <h2>{{ product.name }}</h2>
-                <img style="height: 30%; width: 30%" src="{% static product.img %}" alt="Image product">
+                <img style="height: 30%; width: 30%" src="{{ product.img.url }}" alt="{{ product.img.url }}">
                 <h4 class="text-justify"> {{ product.description }}</h4>
                 <h1>{{ product.price }}</h1>
             </div>

@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 
 
 class Category(models.Model):
@@ -12,7 +13,8 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     available = models.BooleanField(default=False)
     description = models.TextField()
-    price = models.IntegerField()
+    price = models.FloatField(validators=[MinValueValidator(limit_value=0,
+                                                              message='Цена не мможет быть отрицательная!')])
     amount = models.IntegerField()
-    img = models.ImageField()
+    img = models.ImageField(upload_to='img')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
