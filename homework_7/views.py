@@ -6,8 +6,6 @@ import utils
 from temp import current_user
 
 
-
-
 def home_page(request: HttpRequest) -> HttpResponse:
     users = utils.get_users_dict(User.objects.all())
 

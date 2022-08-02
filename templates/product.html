@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
     <section class="section">
@@ -16,7 +15,7 @@
             {% if product.available %}
                 <button style="height: 50px; width: 150px">Купить</button>
             {% else %}
-                <button disabled>Купить</button>
+                <button disabled style="height: 50px; width: 150px">Купить</button>
             {% endif %}
 
         </div>

@@ -7,7 +7,6 @@ from temp import current_user
 import utils
 
 
-
 def catalog_page(request: HttpRequest) -> HttpResponse:
     products = utils.get_products_dict(Product.objects.all())
     users = utils.get_users_dict(User.objects.all())
