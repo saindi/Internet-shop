@@ -1,0 +1,13 @@
+<div class="container-fluid" style="background-color: #c8cbcf;">
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'home_url' %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'catalog_url' %}">Cataloge</a>
+        </li>
+        <li class="nav-item">
+            {% include '_user_name.html' %}
+        </li>
+    </ul>
+</div>
