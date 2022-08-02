@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
-{% load static %}
-
 
 {% block content %}
-    <h1 style="text-align: center; margin-top: 20px">Product page</h1>
+    <section class="section">
+        <div class="container">
+            <h1 style="text-align: center; margin-top: 20px">Product page</h1>
 
-    <div>
-        {{ product_info.product }}<br>{{ product_info.description }}<br>{{ product_info.price }}
-    </div>
+            <div>
+                <h2>{{ product.name }}</h2>
+                <img style="height: 30%; width: 30%" src="{{ product.img.url }}" alt="{{ product.img.url }}">
+                <h4 class="text-justify"> {{ product.description }}</h4>
+                <h1>{{ product.price }}</h1>
+            </div>
 
-    {% if product_info.available %}
-        <button>Купить</button>
-    {% else %}
-        <button disabled>Купить</button>
-    {% endif %}
+            {% if product.available %}
+                <button style="height: 50px; width: 150px">Купить</button>
+            {% else %}
+                <button disabled style="height: 50px; width: 150px">Купить</button>
+            {% endif %}
+
+        </div>
+    </section>
 
 {% endblock %}
