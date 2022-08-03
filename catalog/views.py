@@ -1,29 +1,35 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from catalog.models import Product, Category
-from user.models import User
+from catalog.models import ProductModel, CategoryModel
+from user.models import UserModel
 
-from temp import current_user
-import utils
+from temp import current_user_id
 
 
 def catalog_page(request: HttpRequest) -> HttpResponse:
-    products = utils.get_products_dict(Product.objects.all())
-    users = utils.get_users_dict(User.objects.all())
-    categorys = utils.get_category_dict(Category.objects.all())
+    current_user = UserModel.objects.get(id=current_user_id)
+    products = ProductModel.objects.all()
+    categorys = CategoryModel.objects.all()
 
-    return render(request, 'catalog.html', {"user_name": users[current_user]["username"],
-                                            "products": products,
-                                            "categorys": categorys})
+    context = {"user": current_user,
+               "products": products,
+               "categorys": categorys}
+
+    return render(request, 'catalog.html', context)
 
 
 def product_page(request: HttpRequest, product_slug: str) -> HttpResponse:
-    products = utils.get_products_dict(Product.objects.all())
-    users = utils.get_users_dict(User.objects.all())
+    try:
+        current_user = UserModel.objects.get(id=current_user_id)
+        product = ProductModel.objects.get(slug=product_slug)
 
-    for product in products:
-        if product_slug == product['slug']:
-            return render(request, 'product.html', {"user_name": users[current_user]["username"],
-                                                    "product": product})
-    else:
-        return render(request, 'no_page.html', {"user_name": users[current_user]["username"]})
+        context = {"user": current_user,
+                   "product": product}
+
+        return render(request, 'product.html', context)
+    except ProductModel.DoesNotExist:
+        current_user = UserModel.objects.get(id=current_user_id)
+
+        context = {"user": current_user}
+
+        return render(request, 'no_page.html', context)

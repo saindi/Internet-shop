@@ -1,1 +1,1 @@
-current_user: int = 0
+current_user_id: int = 1

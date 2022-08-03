@@ -1,12 +1,13 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from user.models import User
+from user.models import UserModel
 
-import utils
-from temp import current_user
+from temp import current_user_id
 
 
 def home_page(request: HttpRequest) -> HttpResponse:
-    users = utils.get_users_dict(User.objects.all())
+    user = UserModel.objects.get(id=current_user_id)
 
-    return render(request, 'home.html', {"user_name": users[current_user]["username"]})
+    context = {"user": user}
+
+    return render(request, 'home.html', context)

@@ -7,15 +7,20 @@
 
             <div>
                 <h2>{{ product.name }}</h2>
-                <img style="height: 30%; width: 30%" src="{{ product.img.url }}" alt="{{ product.img.url }}">
-                <h4 class="text-justify"> {{ product.description }}</h4>
-                <h1>{{ product.price }}</h1>
+
+                <img style="height: 30%; width: 30%; margin: 15px 0;" src="{{ product.img.url }}" alt="{{ product.img.url }}">
+
+                <div class="text-justify" style="margin: 15px 0;"> {{ product.description }}</div>
+
+                <h1 style="margin: 15px 0;">{{ product.price }}</h1>
             </div>
 
-            {% if product.available %}
-                <button style="height: 50px; width: 150px">Купить</button>
+            {% if product.available or product.amount %}
+                <a href="#" class="btn btn-primary">Купить</a>
+
             {% else %}
-                <button disabled style="height: 50px; width: 150px">Купить</button>
+                <p class="card-text" style="color: red">Немає в наявності</p>
+                <a href="#" class="btn btn-primary disabled">Купить</a>
             {% endif %}
 
         </div>

@@ -1,4 +1,9 @@
 from django.contrib import admin
-from user.models import User
+from user.models import UserModel
 
-admin.site.register(User)
+
+class UserModelAdmin(admin.ModelAdmin):
+    list_display = "username", "first_name", "last_name"
+
+
+admin.site.register(UserModel, UserModelAdmin)
