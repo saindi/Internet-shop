@@ -18,6 +18,25 @@ def catalog_page(request: HttpRequest) -> HttpResponse:
     return render(request, 'catalog.html', context)
 
 
+def catalog_page_with_category(request: HttpRequest, category_slug: str) -> HttpResponse:
+    current_user = UserModel.objects.get(id=current_user_id)
+    products = ProductModel.objects.filter(category_id=category_slug)
+    categorys = CategoryModel.objects.all()
+
+    context = {"user": current_user,
+               "products": products,
+               "categorys": categorys}
+
+    categorys_slug = []
+    for category in CategoryModel.objects.all():
+        categorys_slug.append(category.slug)
+
+    if category_slug not in categorys_slug:
+        return render(request, 'no_page.html', context)
+
+    return render(request, 'catalog.html', context)
+
+
 def product_page(request: HttpRequest, product_slug: str) -> HttpResponse:
     try:
         current_user = UserModel.objects.get(id=current_user_id)
