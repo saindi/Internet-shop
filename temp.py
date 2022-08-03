@@ -1,0 +1,1 @@
+current_user: int = 0
