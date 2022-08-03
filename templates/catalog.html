@@ -39,7 +39,7 @@
                                     <p class="card-text" style="color: red">Немає в наявності</p>
                                 {% endif %}
 
-                                <a href="product/{{ product.slug }}" class="btn btn-primary">Подробнее</a>
+                                <a href="{% url 'product_url' product_slug=product.slug %}" class="btn btn-primary">Подробнее</a>
                             </div>
                         </div>
                     </div>
