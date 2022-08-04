@@ -3,11 +3,16 @@ from django.shortcuts import render
 from catalog.models import ProductModel, CategoryModel
 from user.models import UserModel
 
-from temp import current_user_id
+from temp import current_user_id, users
 
 
 def catalog_page(request: HttpRequest) -> HttpResponse:
-    current_user = UserModel.objects.get(id=current_user_id)
+    #current_user = UserModel.objects.get(id=current_user_id)
+
+    for user in users:
+        if user["id"] == current_user_id:
+            current_user = user
+
     products = ProductModel.objects.all()
     categorys = CategoryModel.objects.all()
 
@@ -19,7 +24,12 @@ def catalog_page(request: HttpRequest) -> HttpResponse:
 
 
 def catalog_page_with_category(request: HttpRequest, category_slug: str) -> HttpResponse:
-    current_user = UserModel.objects.get(id=current_user_id)
+    #current_user = UserModel.objects.get(id=current_user_id)
+
+    for user in users:
+        if user["id"] == current_user_id:
+            current_user = user
+
     products = ProductModel.objects.filter(category_id=category_slug)
     categorys = CategoryModel.objects.all()
 
@@ -39,7 +49,12 @@ def catalog_page_with_category(request: HttpRequest, category_slug: str) -> Http
 
 def product_page(request: HttpRequest, product_slug: str) -> HttpResponse:
     try:
-        current_user = UserModel.objects.get(id=current_user_id)
+        #current_user = UserModel.objects.get(id=current_user_id)
+
+        for user in users:
+            if user["id"] == current_user_id:
+                current_user = user
+
         product = ProductModel.objects.get(slug=product_slug)
 
         context = {"user": current_user,
@@ -47,7 +62,11 @@ def product_page(request: HttpRequest, product_slug: str) -> HttpResponse:
 
         return render(request, 'catalog/product.html', context)
     except ProductModel.DoesNotExist:
-        current_user = UserModel.objects.get(id=current_user_id)
+        #current_user = UserModel.objects.get(id=current_user_id)
+
+        for user in users:
+            if user["id"] == current_user_id:
+                current_user = user
 
         context = {"user": current_user}
 

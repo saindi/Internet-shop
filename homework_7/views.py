@@ -2,12 +2,16 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from user.models import UserModel
 
-from temp import current_user_id
+from temp import current_user_id, users
 
 
 def home_page(request: HttpRequest) -> HttpResponse:
-    user = UserModel.objects.get(id=current_user_id)
+    #current_user = UserModel.objects.get(id=current_user_id)
 
-    context = {"user": user}
+    for user in users:
+        if user["id"] == current_user_id:
+            current_user = user
+
+    context = {"user": current_user}
 
     return render(request, 'home.html', context)
