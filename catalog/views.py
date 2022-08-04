@@ -15,7 +15,7 @@ def catalog_page(request: HttpRequest) -> HttpResponse:
                "products": products,
                "categorys": categorys}
 
-    return render(request, 'catalog.html', context)
+    return render(request, 'catalog/catalog.html', context)
 
 
 def catalog_page_with_category(request: HttpRequest, category_slug: str) -> HttpResponse:
@@ -32,9 +32,9 @@ def catalog_page_with_category(request: HttpRequest, category_slug: str) -> Http
         categorys_slug.append(category.slug)
 
     if category_slug not in categorys_slug:
-        return render(request, 'no_page.html', context)
+        return render(request, 'catalog/no_page.html', context)
 
-    return render(request, 'catalog.html', context)
+    return render(request, 'catalog/catalog.html', context)
 
 
 def product_page(request: HttpRequest, product_slug: str) -> HttpResponse:
@@ -45,10 +45,10 @@ def product_page(request: HttpRequest, product_slug: str) -> HttpResponse:
         context = {"user": current_user,
                    "product": product}
 
-        return render(request, 'product.html', context)
+        return render(request, 'catalog/product.html', context)
     except ProductModel.DoesNotExist:
         current_user = UserModel.objects.get(id=current_user_id)
 
         context = {"user": current_user}
 
-        return render(request, 'no_page.html', context)
+        return render(request, 'catalog/no_page.html', context)

@@ -10,4 +10,4 @@ def home_page(request: HttpRequest) -> HttpResponse:
 
     context = {"user": user}
 
-    return render(request, 'home.html', context)
+    return render(request, 'homework_7/home.html', context)

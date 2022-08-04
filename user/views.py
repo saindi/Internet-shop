@@ -10,4 +10,4 @@ def user_page(request: HttpRequest) -> HttpResponse:
 
     context = {"user": current_user}
 
-    return render(request, 'user.html', context)
+    return render(request, 'user/user.html', context)
