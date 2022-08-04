@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'homework_7.apps.Homework7Config',  # главная стр
     'catalog.apps.CatalogConfig',       # каталог товаров
     'user.apps.UserConfig',             # стр пользователя(покупателя)
 ]
