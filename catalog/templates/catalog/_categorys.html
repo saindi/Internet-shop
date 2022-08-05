@@ -1,0 +1,8 @@
+{% for category in categorys%}
+    <div class="category">
+        <a class="text" href="{% url 'catalog_page_with_category_url' category_slug=category.slug %}">{{ category.name }}</a>
+    </div>
+{% endfor %}
+<div class="category">
+        <a class="text" href="{% url 'catalog_url' %}">Всі</a>
+    </div>

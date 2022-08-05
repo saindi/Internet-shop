@@ -1,29 +1,73 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from catalog.models import Product, Category
-from user.models import User
+from catalog.models import ProductModel, CategoryModel
+from user.models import UserModel
 
-from temp import current_user
-import utils
+from temp import current_user_id, users
 
 
 def catalog_page(request: HttpRequest) -> HttpResponse:
-    products = utils.get_products_dict(Product.objects.all())
-    users = utils.get_users_dict(User.objects.all())
-    categorys = utils.get_category_dict(Category.objects.all())
+    #current_user = UserModel.objects.get(id=current_user_id)
 
-    return render(request, 'catalog.html', {"user_name": users[current_user]["username"],
-                                            "products": products,
-                                            "categorys": categorys})
+    for user in users:
+        if user["id"] == current_user_id:
+            current_user = user
+
+    products = ProductModel.objects.all()
+    categorys = CategoryModel.objects.all()
+
+    context = {"user": current_user,
+               "products": products,
+               "categorys": categorys}
+
+    return render(request, 'catalog/catalog.html', context)
+
+
+def catalog_page_with_category(request: HttpRequest, category_slug: str) -> HttpResponse:
+    #current_user = UserModel.objects.get(id=current_user_id)
+
+    for user in users:
+        if user["id"] == current_user_id:
+            current_user = user
+
+    products = ProductModel.objects.filter(category_id=category_slug)
+    categorys = CategoryModel.objects.all()
+
+    context = {"user": current_user,
+               "products": products,
+               "categorys": categorys}
+
+    categorys_slug = []
+    for category in CategoryModel.objects.all():
+        categorys_slug.append(category.slug)
+
+    if category_slug not in categorys_slug:
+        return render(request, 'catalog/no_page.html', context)
+
+    return render(request, 'catalog/catalog.html', context)
 
 
 def product_page(request: HttpRequest, product_slug: str) -> HttpResponse:
-    products = utils.get_products_dict(Product.objects.all())
-    users = utils.get_users_dict(User.objects.all())
+    try:
+        #current_user = UserModel.objects.get(id=current_user_id)
 
-    for product in products:
-        if product_slug == product['slug']:
-            return render(request, 'product.html', {"user_name": users[current_user]["username"],
-                                                    "product": product})
-    else:
-        return render(request, 'no_page.html', {"user_name": users[current_user]["username"]})
+        for user in users:
+            if user["id"] == current_user_id:
+                current_user = user
+
+        product = ProductModel.objects.get(slug=product_slug)
+
+        context = {"user": current_user,
+                   "product": product}
+
+        return render(request, 'catalog/product.html', context)
+    except ProductModel.DoesNotExist:
+        #current_user = UserModel.objects.get(id=current_user_id)
+
+        for user in users:
+            if user["id"] == current_user_id:
+                current_user = user
+
+        context = {"user": current_user}
+
+        return render(request, 'catalog/no_page.html', context)
