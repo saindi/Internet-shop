@@ -26,7 +26,6 @@ def category_view(request: HttpRequest, category_slug: str) -> HttpResponse:
 
     try:
         category = CategoryModel.objects.get(slug=category_slug)
-
     except CategoryModel.DoesNotExist as err:
         return page_not_found_view(request, err)
 
