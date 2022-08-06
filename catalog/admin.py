@@ -2,6 +2,7 @@ from django.contrib import admin
 from catalog.models import ProductModel, CategoryModel
 
 
+@admin.register(ProductModel)
 class ProductModelAdmin(admin.ModelAdmin):
     list_display = "slug", "name", "category_id", "amount", "available"
     list_editable = "amount", "available"
@@ -11,11 +12,9 @@ class ProductModelAdmin(admin.ModelAdmin):
     }
 
 
+@admin.register(CategoryModel)
 class CategoryModelAdmin(admin.ModelAdmin):
     list_display = "slug", "name", "description"
     prepopulated_fields = {
         "slug": ["name"],
     }
-
-admin.site.register(ProductModel, ProductModelAdmin)
-admin.site.register(CategoryModel, CategoryModelAdmin)
