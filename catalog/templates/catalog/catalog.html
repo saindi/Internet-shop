@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1 style="text-align: center; margin: 30px 0">Каталог</h1>
+
+    <div class="list-group" style="width: 300px; margin: 0 auto; font-size: 22px">
+        {% for category in categorys %}
+            <a href="{% url 'category_url' category_slug=category.slug %}" class="list-group-item list-group-item-action text-center" style="margin-bottom: 15px">
+                {{ category.name }}
+            </a>
+        {% endfor %}
+    </div>
+
+{% endblock %}
