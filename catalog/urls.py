@@ -1,9 +1,8 @@
 from django.urls import path
-from catalog.views import home_view, catalog_view, product_view, category_view
+from catalog.views import catalog_page, product_page, catalog_page_with_category
 
 urlpatterns = [
-    path('', home_view),
-    path('catalog/', catalog_view, name='catalog_url'),
-    path('catalog/<slug:category_slug>/', category_view, name="category_url"),
-    path('catalog/<slug:category_slug>/<slug:product_slug>/', product_view, name="product_url"),
+    path('', catalog_page, name='catalog_url'),
+    path('<slug:category_slug>/', catalog_page_with_category, name="catalog_page_with_category_url"),
+    path('product/<slug:product_slug>/', product_page, name="product_url"),
 ]

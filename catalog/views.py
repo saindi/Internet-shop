@@ -1,52 +1,73 @@
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from django.urls import reverse_lazy
-
 from catalog.models import ProductModel, CategoryModel
-from homework_7.views import page_not_found_view
+from user.models import UserModel
+
+from temp import current_user_id, users
 
 
-def home_view(request: HttpRequest) -> HttpResponse:
-    return HttpResponseRedirect(reverse_lazy('catalog_url'))
+def catalog_page(request: HttpRequest) -> HttpResponse:
+    #current_user = UserModel.objects.get(id=current_user_id)
 
+    for user in users:
+        if user["id"] == current_user_id:
+            current_user = user
 
-def catalog_view(request: HttpRequest) -> HttpResponse:
-    context = {"categorys": CategoryModel.objects.all()}
+    products = ProductModel.objects.all()
+    categorys = CategoryModel.objects.all()
+
+    context = {"user": current_user,
+               "products": products,
+               "categorys": categorys}
 
     return render(request, 'catalog/catalog.html', context)
 
 
-def category_view(request: HttpRequest, category_slug: str) -> HttpResponse:
-    if len(request.GET) != 0:
-        price_range = request.GET['price_interval'].split(";")
+def catalog_page_with_category(request: HttpRequest, category_slug: str) -> HttpResponse:
+    #current_user = UserModel.objects.get(id=current_user_id)
 
-        products = ProductModel.objects.filter(category_id=category_slug, price__range=price_range)
-    else:
-        products = ProductModel.objects.filter(category_id=category_slug)
+    for user in users:
+        if user["id"] == current_user_id:
+            current_user = user
 
+    products = ProductModel.objects.filter(category_id=category_slug)
+    categorys = CategoryModel.objects.all()
+
+    context = {"user": current_user,
+               "products": products,
+               "categorys": categorys}
+
+    categorys_slug = []
+    for category in CategoryModel.objects.all():
+        categorys_slug.append(category.slug)
+
+    if category_slug not in categorys_slug:
+        return render(request, 'catalog/no_page.html', context)
+
+    return render(request, 'catalog/catalog.html', context)
+
+
+def product_page(request: HttpRequest, product_slug: str) -> HttpResponse:
     try:
-        category = CategoryModel.objects.get(slug=category_slug)
+        #current_user = UserModel.objects.get(id=current_user_id)
 
-    except CategoryModel.DoesNotExist as err:
-        return page_not_found_view(request, err)
+        for user in users:
+            if user["id"] == current_user_id:
+                current_user = user
 
-    context = {"products": products,
-               "category": category}
-
-    return render(request, 'catalog/category.html', context)
-
-
-def product_view(request: HttpRequest, category_slug: str, product_slug: str) -> HttpResponse:
-    try:
         product = ProductModel.objects.get(slug=product_slug)
-        category = CategoryModel.objects.get(slug=category_slug)
 
-    except ProductModel.DoesNotExist as err:
-        return page_not_found_view(request, err)
+        context = {"user": current_user,
+                   "product": product}
 
-    except CategoryModel.DoesNotExist as err:
-        return page_not_found_view(request, err)
+        return render(request, 'catalog/product.html', context)
+    except ProductModel.DoesNotExist:
+        #current_user = UserModel.objects.get(id=current_user_id)
 
-    context = {"product": product}
+        for user in users:
+            if user["id"] == current_user_id:
+                current_user = user
 
-    return render(request, 'catalog/product.html', context)
+        context = {"user": current_user}
+
+        return render(request, 'catalog/no_page.html', context)
