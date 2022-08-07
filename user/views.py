@@ -51,6 +51,9 @@ def signup_view(request: HttpRequest) -> HttpResponse:
 
 
 def logout_view(request: HttpRequest) -> HttpResponse:
+    if request.user.is_anonymous:
+        return HttpResponseRedirect(reverse_lazy('home_url'))
+
     logout(request)
     return HttpResponseRedirect(reverse_lazy('home_url'))
 
