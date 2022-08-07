@@ -3,11 +3,23 @@
         <li class="nav-item">
             <a class="nav-link" href="{% url 'catalog_url' %}">Каталог</a>
         </li>
-{#        <li class="nav-item">#}
-{#             <a href="{% url 'user_url' %}" class="nav-link">{{ user.username }}</a>#}
-{#        </li>#}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'user_url' %}">{{ user }}</a>
-        </li>
+
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'user_url' %}">{{ user }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout_url' %}">Logout</a>
+            </li>
+
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'signin_url' %}">Sign in</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'signup_url' %}">Sign up</a>
+            </li>
+
+        {% endif %}
     </ul>
 </div>
