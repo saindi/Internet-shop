@@ -2,7 +2,8 @@
 
 <div class="text" style="margin-bottom: 5px">Ціна</div>
 
-<form method="get">
+<form method="post">
+    {% csrf_token %}
     <input type="text" class="js-range-slider" name="price_interval" value=""/>
     <button type="submit" class="btn bg-danger text-light" style="margin: 15px 0">Знайти</button>
 </form>
