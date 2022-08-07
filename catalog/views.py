@@ -17,17 +17,20 @@ def catalog_view(request: HttpRequest) -> HttpResponse:
 
 
 def category_view(request: HttpRequest, category_slug: str) -> HttpResponse:
-    if len(request.GET) != 0:
-        price_range = request.GET['price_interval'].split(";")
+    if request.method == "POST":
+        price_range = request.POST['price_interval'].split(";")
 
         products = ProductModel.objects.filter(category_id=category_slug, price__range=price_range)
-    else:
-        products = ProductModel.objects.filter(category_id=category_slug)
-
-    try:
         category = CategoryModel.objects.get(slug=category_slug)
-    except CategoryModel.DoesNotExist as err:
-        return page_not_found_view(request, err)
+
+        context = {"products": products,
+                   "category": category}
+
+        return render(request, 'catalog/category.html', context)
+
+
+    products = ProductModel.objects.filter(category_id=category_slug)
+    category = CategoryModel.objects.get(slug=category_slug)
 
     context = {"products": products,
                "category": category}
