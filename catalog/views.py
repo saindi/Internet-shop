@@ -28,9 +28,13 @@ def category_view(request: HttpRequest, category_slug: str) -> HttpResponse:
 
         return render(request, 'catalog/category.html', context)
 
+    try:
+        category = CategoryModel.objects.get(slug=category_slug)
+    except CategoryModel.DoesNotExist as err:
+        return page_not_found_view(request, err)
 
     products = ProductModel.objects.filter(category_id=category_slug)
-    category = CategoryModel.objects.get(slug=category_slug)
+
 
     context = {"products": products,
                "category": category}
