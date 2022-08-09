@@ -17,6 +17,14 @@
 
             <div>id: {{ user.id }}</div>
             <div>username: {{ user.username }}</div>
+            <div>first_name: {{ user.first_name }}</div>
+            <div>last_name: {{ user.last_name }}</div>
+            <div>email: {{ user.email }}</div>
+            <div>last_login: {{ user.last_login }}</div>
+            <div>date_joined: {{ user.date_joined }}</div>
+
+            <a href="{% url 'deactivation_user_url' %}" class="btn bg-danger text-light" style="margin-top: 15px;">Деактивація</a>
+
         </div>
 
         <div class="col-sm">
