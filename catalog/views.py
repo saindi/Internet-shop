@@ -11,7 +11,7 @@ def home_view(request: HttpRequest) -> HttpResponse:
 
 
 def catalog_view(request: HttpRequest) -> HttpResponse:
-    context = {"categorys": CategoryModel.objects.all()}
+    context = {"categories": CategoryModel.objects.all()}
 
     return render(request, 'catalog/catalog.html', context)
 
