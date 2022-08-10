@@ -2,7 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.contrib.auth.models import User
+
+from user.models import UserModel
 
 
 def user_view(request: HttpRequest) -> HttpResponse:
@@ -31,7 +32,6 @@ def signin_view(request: HttpRequest) -> HttpResponse:
 
 
 def signup_view(request: HttpRequest) -> HttpResponse:
-    #
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse_lazy('user_url'))
 
@@ -40,8 +40,8 @@ def signup_view(request: HttpRequest) -> HttpResponse:
         password1 = request.POST['password1']
         password2 = request.POST['password2']
 
-        if password1 == password2 and len(User.objects.filter(username=username)) == 0:
-            User.objects.create_user(username=username,
+        if password1 == password2 and len(UserModel.objects.filter(username=username)) == 0:
+            UserModel.objects.create_user(username=username,
                                      password=password1)
             return HttpResponseRedirect(reverse_lazy('signin_url'))
 
@@ -61,7 +61,7 @@ def deactivation_user_view(request: HttpRequest) -> HttpResponse:
     if request.user.is_anonymous:
         return HttpResponseRedirect(reverse_lazy('home_url'))
 
-    user = User.objects.get(username=request.user.username)
+    user = UserModel.objects.get(username=request.user.username)
 
     user.is_active = False
     user.save()
