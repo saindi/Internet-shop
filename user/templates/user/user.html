@@ -18,9 +18,12 @@
                     Інформація
                 </h2>
 
-                <div class="img-fluid h-25 m-4">
-                    <img class="user-photo" src="{% static '/img/user_img.png' %}" alt="My Photo">
-                </div>
+                {% if user.img %}
+                    <div class="img-fluid h-25 m-4">
+                        <img class="user-photo" src="{{ user.img.url }}" alt="MyPhoto">
+                    </div>
+                {% endif %}
+
 
                 <div>id: {{ user.id }}</div>
                 <div>username: {{ user.username }}</div>
