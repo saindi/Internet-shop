@@ -38,7 +38,7 @@ class ProductModel(models.Model):
         validators=[MinValueValidator(limit_value=0,
                                       message='Кількість може бути негативним значенням!')])
 
-    img = models.ImageField(upload_to='img')
+    img = models.ImageField(upload_to='catalog/img')
 
     category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE)
 
