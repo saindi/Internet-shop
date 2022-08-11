@@ -17,13 +17,7 @@
               <form method="post">
                   {% csrf_token %}
 
-                  <div class="form-floating mb-3">
-                    <input type="text" name="username" class="form-control" id="username" placeholder="Username" required autofocus>
-                  </div>
-
-                  <div class="form-floating mb-3">
-                    <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
-                  </div>
+                  {{ form.as_p }}
 
                   <div class="d-grid">
                         <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Sign in</button>

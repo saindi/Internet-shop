@@ -33,6 +33,10 @@
                 <div>last_login: {{ user.last_login }}</div>
                 <div>date_joined: {{ user.date_joined }}</div>
 
+                <a href="{% url 'edit_user_data_url' %}" class="btn btn-primary mt-3 mr-3">Редагувати дані</a>
+
+                <a href="{% url 'edit_user_password_url' %}" class="btn btn-primary mt-3 mr-3">Змінити пароль</a>
+
                 <a href="{% url 'deactivation_user_url' %}" class="btn bg-danger text-light mt-3">Деактивація</a>
 
             </div>
