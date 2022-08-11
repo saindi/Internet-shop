@@ -5,3 +5,10 @@
 .btn {
     width: 100%;
 }
+
+.errorlist {
+    list-style-type: none;
+    padding: 0;
+    color: #ff0000;
+    text-align: center;
+}
