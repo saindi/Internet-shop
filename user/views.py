@@ -95,4 +95,4 @@ def edit_user_password_view(request: HttpRequest) -> HttpResponse:
     else:
         form = EditUserPasswordForm(instance=request.user)
 
-    return render(request, 'user/edit_user_data.html', {"form": form})
+    return render(request, 'user/edit_user_password.html', {"form": form})

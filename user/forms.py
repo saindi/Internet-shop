@@ -95,6 +95,10 @@ class EditUserDataForm(forms.ModelForm):
 
 
 class EditUserPasswordForm(forms.ModelForm):
+    password = forms.CharField(label=False,
+                               widget=forms.PasswordInput(attrs={"class": "form-control",
+                                                                 "placeholder": "password",
+                                                                 "value": ""}))
     password2 = forms.CharField(label=False,
                                 widget=forms.PasswordInput(attrs={"class": "form-control",
                                                                   "placeholder": "Confirm password"}))
@@ -102,9 +106,6 @@ class EditUserPasswordForm(forms.ModelForm):
     class Meta:
         model = UserModel
         fields = ['password']
-        widgets = {'password': forms.PasswordInput(attrs={"class": "form-control",
-                                                          "placeholder": "password",
-                                                          "value": ""})}
 
     def clean(self):
         password = self.cleaned_data["password"]
