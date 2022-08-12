@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -7,10 +8,8 @@ from user.forms import SignUpForm, SignInForm, EditUserDataForm, EditUserPasswor
 from user.models import UserModel
 
 
+@login_required(login_url='signin_url')
 def user_view(request: HttpRequest) -> HttpResponse:
-    if request.user.is_anonymous:
-        return HttpResponseRedirect(reverse_lazy('signin_url'))
-
     return render(request, 'user/user.html')
 
 
@@ -45,17 +44,15 @@ def signup_view(request: HttpRequest) -> HttpResponse:
     return render(request, 'user/signup.html', {"form": form})
 
 
+@login_required(login_url='home_url')
 def logout_view(request: HttpRequest) -> HttpResponse:
-    if request.user.is_authenticated:
-        logout(request)
+    logout(request)
 
     return HttpResponseRedirect(reverse_lazy('home_url'))
 
 
+@login_required(login_url='signin_url')
 def deactivation_user_view(request: HttpRequest) -> HttpResponse:
-    if request.user.is_anonymous:
-        return HttpResponseRedirect(reverse_lazy('home_url'))
-
     user = UserModel.objects.get(username=request.user.username)
 
     user.is_active = False
@@ -66,10 +63,8 @@ def deactivation_user_view(request: HttpRequest) -> HttpResponse:
     return HttpResponseRedirect(reverse_lazy('home_url'))
 
 
+@login_required(login_url='signin_url')
 def edit_user_data_view(request: HttpRequest) -> HttpResponse:
-    if request.user.is_anonymous:
-        return HttpResponseRedirect(reverse_lazy('home_url'))
-
     if request.method == "POST":
         form = EditUserDataForm(request.POST, request.FILES, instance=request.user)
 
@@ -82,10 +77,8 @@ def edit_user_data_view(request: HttpRequest) -> HttpResponse:
     return render(request, 'user/edit_user_data.html', {"form": form})
 
 
+@login_required(login_url='signin_url')
 def edit_user_password_view(request: HttpRequest) -> HttpResponse:
-    if request.user.is_anonymous:
-        return HttpResponseRedirect(reverse_lazy('home_url'))
-
     if request.method == "POST":
         form = EditUserPasswordForm(request.POST, instance=request.user)
 
