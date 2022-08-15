@@ -2,8 +2,7 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+    <link rel="stylesheet" href="{% static 'css/ion.rangeSlider.css' %}"/>
     <link rel="stylesheet" href=" {% static '/css/category.css' %}">
 {% endblock %}
 
@@ -15,7 +14,7 @@
         <div class="row">
             <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12">
 
-                <div>
+                <div class="mr-2 ml-2">
                     {% include 'catalog/_filter.html' %}
                 </div>
 
@@ -25,7 +24,9 @@
                 <div class="row">
                     {% for product in products %}
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
-                            <div class="card">
+                            <div class="card" onclick="location.href='{% url 'product_url' category_slug=category.slug product_slug=product.slug %}';">
+
+
 
                                 <div class="photo-container">
                                     <img class="photo" src="{{ product.img.url }}" alt="{{ product.img.url }}">

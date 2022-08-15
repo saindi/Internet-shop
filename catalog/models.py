@@ -12,6 +12,11 @@ class CategoryModel(models.Model):
         max_length=100
     )
 
+    img = models.ImageField(
+        upload_to='category/img',
+        default='category/img/logo.png'
+    )
+
     description = models.TextField()
 
     def __str__(self):
