@@ -11,8 +11,10 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <div class="m-4">
-                {{ form.errors }}
+            <div class="mt-4">
+                {{ form.non_field_errors }}
+                {{ form.email.errors }}
+                {{ form.username.errors }}
             </div>
 
             <div class="row w-75 m-auto text-center">

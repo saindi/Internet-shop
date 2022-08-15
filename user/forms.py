@@ -6,13 +6,19 @@ from user.models import UserModel
 
 
 class SignInForm(forms.Form):
-    username = forms.CharField(label=False,
-                               widget=forms.TextInput(attrs={"class": "form-control",
-                                                             "placeholder": "Username"}))
+    username = forms.CharField(
+        label=False,
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Username"}
+        )
+    )
 
-    password = forms.CharField(label=False,
-                               widget=forms.PasswordInput(attrs={"class": "form-control",
-                                                                 "placeholder": "Password"}))
+    password = forms.CharField(
+        label=False,
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Password"}
+        )
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -29,21 +35,33 @@ class SignInForm(forms.Form):
 
 
 class SignUpForm(forms.Form):
-    username = forms.CharField(label=False,
-                               widget=forms.TextInput(attrs={"class": "form-control",
-                                                             "placeholder": "Username"}))
+    username = forms.CharField(
+        label=False,
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Username"}
+        )
+    )
 
-    email = forms.CharField(label=False,
-                            widget=forms.EmailInput(attrs={"class": "form-control",
-                                                           "placeholder": "Email"}))
+    email = forms.CharField(
+        label=False,
+        widget=forms.EmailInput(
+            attrs={"class": "form-control", "placeholder": "Email"}
+        )
+    )
 
-    password1 = forms.CharField(label=False,
-                                widget=forms.PasswordInput(attrs={"class": "form-control",
-                                                                  "placeholder": "Password"}))
+    password1 = forms.CharField(
+        label=False,
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Password"}
+        )
+    )
 
-    password2 = forms.CharField(label=False,
-                                widget=forms.PasswordInput(attrs={"class": "form-control",
-                                                                  "placeholder": "Confirm password"}))
+    password2 = forms.CharField(
+        label=False,
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Confirm password"}
+        )
+    )
 
     def clean_username(self):
         username = self.cleaned_data["username"]
@@ -79,33 +97,42 @@ class SignUpForm(forms.Form):
 
 
 class EditUserDataForm(forms.ModelForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
-
-    first_name = forms.CharField(required=True,
-                                 widget=forms.TextInput(attrs={"class": "form-control"}))
-
-    last_name = forms.CharField(required=True,
-                                widget=forms.TextInput(attrs={"class": "form-control"}))
-
-    email = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))
-
     class Meta:
         model = UserModel
         fields = ['username', 'first_name', 'last_name', 'email', 'img']
+        widgets = {
+            'username': forms.TextInput(attrs={"class": "form-control"}),
+            'first_name': forms.TextInput(attrs={"class": "form-control", "required": True}),
+            'last_name': forms.TextInput(attrs={"class": "form-control", "required": True}),
+            'email': forms.EmailInput(attrs={"class": "form-control"}),
+        }
+
+    def clean_username(self):
+        username = self.cleaned_data["username"]
+
+        if self.instance.username == username:
+            return username
+
+        try:
+            UserModel.objects.get(username=username)
+            raise ValidationError("Користувач із таким ім'ям вже є")
+        except UserModel.DoesNotExist:
+            return username
 
 
 class EditUserPasswordForm(forms.ModelForm):
-    password = forms.CharField(label=False,
-                               widget=forms.PasswordInput(attrs={"class": "form-control",
-                                                                 "placeholder": "password",
-                                                                 "value": ""}))
-    password2 = forms.CharField(label=False,
-                                widget=forms.PasswordInput(attrs={"class": "form-control",
-                                                                  "placeholder": "Confirm password"}))
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Confirm password"}
+        )
+    )
 
     class Meta:
         model = UserModel
         fields = ['password']
+        widgets = {
+            'password': forms.PasswordInput(attrs={"class": "form-control", "placeholder": "New password"}),
+        }
 
     def clean(self):
         password = self.cleaned_data["password"]
