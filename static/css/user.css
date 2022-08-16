@@ -1,5 +1,11 @@
-.user-photo {
-    object-fit: contain;
+.btn {
     width: 100%;
-    height: 100%;
+}
+
+.avatar {
+    width: 150px;
+}
+
+.card {
+    background-color: #eee;
 }

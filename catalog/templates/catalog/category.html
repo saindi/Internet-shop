@@ -9,7 +9,7 @@
 {% block content %}
     <div class="container p-0">
 
-        <h1 class="text-center m-4">{{ category.name }}</h1>
+        <h2 class="text-center m-4">{{ category.name }}</h2>
 
         <div class="row">
             <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-12">
@@ -24,8 +24,8 @@
                 <div class="row">
                     {% for product in products %}
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
-                            <div class="card" onclick="location.href='{% url 'product_url' category_slug=category.slug product_slug=product.slug %}';">
-
+                            <div class="card"
+                                 onclick="location.href='{% url 'product_url' category_slug=category.slug product_slug=product.slug %}';">
 
 
                                 <div class="photo-container">
@@ -33,17 +33,15 @@
                                 </div>
 
 
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ product.name }}</h5>
+                                <div class="card-body p-0 pl-3 pb-3">
+                                    <p class="card-title">{{ product.name }}</p>
 
-                                    <p class="card-text">{{ product.price }} грн</p>
+                                    <h5 class="card-text">{{ product.price }} грн</h5>
 
                                     {% if product.amount == 0 or product.available == 0 %}
                                         <p class="card-text text-danger">Немає в наявності</p>
                                     {% endif %}
 
-                                    <a href="{% url 'product_url' category_slug=category.slug product_slug=product.slug %}"
-                                       class="btn btn-primary">Детальніше</a>
 
                                 </div>
                             </div>

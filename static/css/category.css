@@ -19,6 +19,10 @@
     object-fit: contain;
 }
 
+.btn-filter {
+    background-color: #4e555b;
+}
+
 @media screen and (max-width: 576px) {
     .card {
         margin: 0 auto;
