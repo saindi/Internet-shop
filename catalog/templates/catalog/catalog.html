@@ -14,7 +14,7 @@
 
                 {% for category in categories %}
                     <div class="col-xl-4 col-md-6">
-                        <a href="{% url 'category_url' category_slug=category.slug %}" class="">
+                        <a href="{% url 'catalog:category_url' category_slug=category.slug %}" class="">
 
                             <div class="shop">
                                 <div class="shop-img product-photo-container">

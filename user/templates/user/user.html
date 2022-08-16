@@ -25,21 +25,21 @@
                             <h5 class="my-3">{{ user.first_name }} {{ user.last_name }}</h5>
 
                             <div class="d-flex justify-content-center mb-2">
-                                <a href="{% url 'edit_user_data_url' %}" type="button" class="btn btn-primary m-1 font-weight-normal">Редагувати дані</a>
+                                <a href="{% url 'user:edit_data_url' %}" type="button" class="btn btn-primary m-1 font-weight-normal">Редагувати дані</a>
                             </div>
 
                             <div class="d-flex justify-content-center mb-2">
-                                <a href="{% url 'edit_user_password_url' %}" type="button" class="btn btn-primary m-1" >Змінити пароль</a>
+                                <a href="{% url 'user:edit_password_url' %}" type="button" class="btn btn-primary m-1" >Змінити пароль</a>
                             </div>
 
                             <div class="d-flex justify-content-center mb-2">
-                                <a href="{% url 'deactivation_user_url' %}" type="button" class="btn btn-danger m-1">Деактивація</a>
+                                <a href="{% url 'user:deactivation_url' %}" type="button" class="btn btn-danger m-1">Деактивація</a>
                             </div>
 
                         </div>
                     </div>
 
-                    <div class="card mb-4 mb-lg-0" style="background-color: #eee;">
+                    <div class="card mb-4 mb-lg-0">
                         <div class="card-body p-0">
 
                             <div class="card-body">
@@ -98,7 +98,7 @@
                 </div>
 
                 <div class="col-lg-8">
-                    <div class="card mb-4" style="background-color: #eee; height: 100%">
+                    <div class="card mb-4 height-long">
                         <div class="card-body">
 
                             <h4 class="text-center font-weight-normal">

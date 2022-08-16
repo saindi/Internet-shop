@@ -9,3 +9,7 @@
 .card {
     background-color: #eee;
 }
+
+.height-long {
+    height: 100%
+}

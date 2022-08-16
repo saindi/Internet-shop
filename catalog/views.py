@@ -7,7 +7,7 @@ from mysite.views import page_not_found_view
 
 
 def home_view(request: HttpRequest) -> HttpResponse:
-    return HttpResponseRedirect(reverse_lazy('catalog_url'))
+    return HttpResponseRedirect(reverse_lazy('catalog:catalog_url'))
 
 
 def catalog_view(request: HttpRequest) -> HttpResponse:
