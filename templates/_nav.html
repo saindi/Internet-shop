@@ -1,25 +1,25 @@
 <div class="container-fluid p-0">
-    <ul class="nav justify-content-center" >
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'catalog_url' %}">Каталог</a>
-        </li>
-
-        {% if user.is_authenticated %}
+        <ul class="nav justify-content-center navbar-dark bg-dark">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'user_url' %}">{{ user.username }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout_url' %}">Logout</a>
+                <a class="nav-link" href="{% url 'catalog_url' %}">Каталог</a>
             </li>
 
-        {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'signin_url' %}">Sign in</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'signup_url' %}">Sign up</a>
-            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link color-white" href="{% url 'user_url' %}">{{ user.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout_url' %}">Logout</a>
+                </li>
 
-        {% endif %}
-    </ul>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signin_url' %}">Sign in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup_url' %}">Sign up</a>
+                </li>
+
+            {% endif %}
+        </ul>
 </div>
