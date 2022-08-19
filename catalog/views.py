@@ -24,7 +24,8 @@ def category_view(request: HttpRequest, category_slug: str) -> HttpResponse:
         category = CategoryModel.objects.get(slug=category_slug)
 
         context = {"products": products,
-                   "category": category}
+                   "category": category,
+                   "price_range": price_range}
 
         return render(request, 'catalog/category.html', context)
 
@@ -37,7 +38,8 @@ def category_view(request: HttpRequest, category_slug: str) -> HttpResponse:
 
 
     context = {"products": products,
-               "category": category}
+               "category": category,
+               "price_range": [0, 50000]}
 
     return render(request, 'catalog/category.html', context)
 
