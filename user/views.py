@@ -27,9 +27,9 @@ def signin_view(request: HttpRequest) -> HttpResponse:
             else:
                 return HttpResponseRedirect(reverse_lazy('catalog:home_url'))
     else:
-        context = {"form": SignInForm()}
+        form = SignInForm()
 
-    return render(request, 'user/signin.html', context)
+    return render(request, 'user/signin.html', {"form": form})
 
 
 def signup_view(request: HttpRequest) -> HttpResponse:
