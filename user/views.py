@@ -8,7 +8,7 @@ from user.forms import SignUpForm, SignInForm, EditUserDataForm, EditUserPasswor
 from user.models import UserModel
 
 
-@login_required(login_url='user:signin_url')
+@login_required()
 def user_view(request: HttpRequest) -> HttpResponse:
     return render(request, 'user/user.html')
 
@@ -44,14 +44,14 @@ def signup_view(request: HttpRequest) -> HttpResponse:
     return render(request, 'user/signup.html', {"form": form})
 
 
-@login_required(login_url='catalog:home_url')
+@login_required()
 def logout_view(request: HttpRequest) -> HttpResponse:
     logout(request)
 
     return HttpResponseRedirect(reverse_lazy('catalog:home_url'))
 
 
-@login_required(login_url='user:signin_url')
+@login_required()
 def deactivation_user_view(request: HttpRequest) -> HttpResponse:
     user = UserModel.objects.get(username=request.user.username)
 
@@ -63,7 +63,7 @@ def deactivation_user_view(request: HttpRequest) -> HttpResponse:
     return HttpResponseRedirect(reverse_lazy('catalog:home_url'))
 
 
-@login_required(login_url='user:signin_url')
+@login_required()
 def edit_user_data_view(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         form = EditUserDataForm(request.POST, request.FILES, instance=request.user)
@@ -77,7 +77,7 @@ def edit_user_data_view(request: HttpRequest) -> HttpResponse:
     return render(request, 'user/edit_user_data.html', {"form": form})
 
 
-@login_required(login_url='user:signin_url')
+@login_required()
 def edit_user_password_view(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         form = EditUserPasswordForm(request.POST, instance=request.user)
