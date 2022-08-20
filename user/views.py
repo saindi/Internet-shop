@@ -22,10 +22,14 @@ def signin_view(request: HttpRequest) -> HttpResponse:
 
         if form.is_valid():
             login(request, form.user)
-            return HttpResponseRedirect(reverse_lazy('catalog:home_url'))
+            if 'next' in request.GET:
+                return HttpResponseRedirect(request.GET['next'])
+            else:
+                return HttpResponseRedirect(reverse_lazy('catalog:home_url'))
     else:
-        form = SignInForm()
-    return render(request, 'user/signin.html', {"form": form})
+        context = {"form": SignInForm()}
+
+    return render(request, 'user/signin.html', context)
 
 
 def signup_view(request: HttpRequest) -> HttpResponse:
