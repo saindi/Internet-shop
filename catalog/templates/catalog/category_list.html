@@ -7,14 +7,16 @@
 
 {% block content %}
 
-    <h2 class="text-center m-4">Каталог</h2>
+    <h2 class="text-center m-4 ">
+        Каталог
+    </h2>
 
         <div class="container p-0">
             <div class="row">
 
                 {% for category in categories %}
                     <div class="col-xl-4 col-md-6">
-                        <a href="{% url 'catalog:category_url' category_slug=category.slug %}" class="">
+                        <a href="{% url 'catalog:product_list_url' category_slug=category.slug %}" class="">
 
                             <div class="shop">
                                 <div class="shop-img product-photo-container">

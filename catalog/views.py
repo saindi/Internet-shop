@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, TemplateView, DetailView, UpdateView, DeleteView, CreateView, RedirectView
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView, RedirectView
 from catalog.models import CategoryModel, ProductModel
 from mysite import settings
 from django.urls import reverse_lazy
@@ -14,12 +14,12 @@ class StaffProfileRequiredMixin(object):
 
 
 class HomeView(RedirectView):
-    pattern_name = 'catalog:catalog_url'
+    pattern_name = 'catalog:category_list_url'
 
 
-class CatalogView(ListView):
+class CategoryListView(ListView):
     model = CategoryModel
-    template_name = 'catalog/catalog.html'
+    template_name = 'catalog/category_list.html'
     context_object_name = 'categories'
 
 
@@ -43,9 +43,9 @@ class CategoryCreateView(StaffProfileRequiredMixin, CreateView):
     fields = '__all__'
 
 
-class CategoryView(ListView):
+class ProductListView(ListView):
     model = ProductModel
-    template_name = 'catalog/category.html'
+    template_name = 'catalog/product_list.html'
     context_object_name = 'products'
     allow_empty = False
 
@@ -69,10 +69,10 @@ class CategoryView(ListView):
         return render(request, self.template_name, self.get_context_data(price_range=price_range))
 
 
-class ProductView(DetailView):
+class ProductDetailView(DetailView):
     model = ProductModel
     slug_url_kwarg = 'product_slug'
-    template_name = 'catalog/product.html'
+    template_name = 'catalog/product_detail.html'
     context_object_name = 'product'
 
 

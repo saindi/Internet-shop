@@ -28,7 +28,7 @@ class CategoryModel(models.Model):
         verbose_name_plural = "Категорії"
 
     def get_absolute_url(self):
-        return reverse_lazy('catalog:catalog_url')
+        return reverse_lazy('catalog:category_list_url')
 
 
 class ProductModel(models.Model):
@@ -81,4 +81,4 @@ class ProductModel(models.Model):
         verbose_name_plural = "Товари"
 
     def get_absolute_url(self):
-        return reverse_lazy('catalog:product_url', kwargs={'product_slug': self.slug})
+        return reverse_lazy('catalog:product_detail_url', kwargs={'product_slug': self.slug})
