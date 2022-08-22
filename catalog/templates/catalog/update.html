@@ -10,7 +10,7 @@
 {% block content %}
     <div class="container mt-3">
     <h2 class="text-center m-4">Update {{ object.name }}</h2>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
             {{ form.non_field_errors }}
@@ -20,7 +20,7 @@
 
             <input type="submit" class="btn btn-success" value="Save">
 
-            <a href="{% url 'catalog_administration:category_list_url' %}" class="btn btn-danger">Скасування</a>
+            <a href="{% url 'catalog:product_url' product_slug=object.slug %}" class="btn btn-danger">Скасування</a>
         </form>
 
     </div>

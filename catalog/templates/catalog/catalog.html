@@ -9,7 +9,7 @@
 
     <h2 class="text-center m-4">Каталог</h2>
 
-        <div class="container">
+        <div class="container p-0">
             <div class="row">
 
                 {% for category in categories %}
@@ -30,6 +30,21 @@
                 {% endfor %}
             </div>
         </div>
+
+    {% if user.is_staff %}
+        <div class="container p-0 mt-4">
+            <a href="{% url 'catalog:category_create_url' %}" class="btn btn-primary btn-lg">Create new category</a>
+        </div>
+
+        {% for category in categories %}
+            <div class="container p-0 mt-4">
+                <a href="{% url 'catalog:category_update_url' category_slug=category.slug %}" class="btn btn-success btn-lg">Update {{ category.name }}</a>
+                <a href="{% url 'catalog:category_delete_url' category_slug=category.slug %}" class="btn btn-danger btn-lg">Delate {{ category.name }}</a>
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
 
 
 {% endblock %}

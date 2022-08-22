@@ -1,11 +1,12 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.urls import reverse_lazy
 
 
 class CategoryModel(models.Model):
     slug = models.SlugField(
         max_length=100,
-        primary_key=True
+        unique=True
     )
 
     name = models.CharField(
@@ -26,11 +27,14 @@ class CategoryModel(models.Model):
         verbose_name = "Категорія"
         verbose_name_plural = "Категорії"
 
+    def get_absolute_url(self):
+        return reverse_lazy('catalog:catalog_url')
+
 
 class ProductModel(models.Model):
     slug = models.SlugField(
         max_length=100,
-        primary_key=True
+        unique=True
     )
 
     name = models.CharField(
@@ -75,3 +79,6 @@ class ProductModel(models.Model):
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товари"
+
+    def get_absolute_url(self):
+        return reverse_lazy('catalog:product_url', kwargs={'product_slug': self.slug})

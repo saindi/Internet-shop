@@ -51,4 +51,13 @@
             </div>
         </div>
     </div>
+
+    {% if user.is_staff %}
+        <div class="container p-0 mt-4">
+            <a href="{% url 'catalog:product_create_url' %}" class="btn btn-primary btn-lg">Create new product</a>
+        </div>
+    {% endif %}
+
+
+
 {% endblock %}

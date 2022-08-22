@@ -1,6 +1,16 @@
 from django.shortcuts import render
-from django.views.generic import RedirectView, ListView, DetailView
-from catalog.models import ProductModel, CategoryModel
+from django.http import HttpResponseRedirect
+from django.views.generic import ListView, TemplateView, DetailView, UpdateView, DeleteView, CreateView, RedirectView
+from catalog.models import CategoryModel, ProductModel
+from mysite import settings
+from django.urls import reverse_lazy
+
+
+class StaffProfileRequiredMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+        return super(StaffProfileRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
 class HomeView(RedirectView):
@@ -11,6 +21,26 @@ class CatalogView(ListView):
     model = CategoryModel
     template_name = 'catalog/catalog.html'
     context_object_name = 'categories'
+
+
+class CategoryUpdateView(StaffProfileRequiredMixin, UpdateView):
+    model = CategoryModel
+    fields = '__all__'
+    slug_url_kwarg = 'category_slug'
+    template_name = 'catalog/update.html'
+
+
+class CategoryDeleteView(StaffProfileRequiredMixin, DeleteView):
+    model = CategoryModel
+    template_name = 'catalog/delete.html'
+    slug_url_kwarg = 'category_slug'
+    success_url = '/'
+
+
+class CategoryCreateView(StaffProfileRequiredMixin, CreateView):
+    model = CategoryModel
+    template_name = 'catalog/create.html'
+    fields = '__all__'
 
 
 class CategoryView(ListView):
@@ -44,3 +74,26 @@ class ProductView(DetailView):
     slug_url_kwarg = 'product_slug'
     template_name = 'catalog/product.html'
     context_object_name = 'product'
+
+
+class ProductUpdateView(StaffProfileRequiredMixin, UpdateView):
+    model = ProductModel
+    template_name = 'catalog/update.html'
+    slug_url_kwarg = 'product_slug'
+    context_object_name = 'product'
+    fields = '__all__'
+
+
+class ProductDeleteView(StaffProfileRequiredMixin, DeleteView):
+    model = ProductModel
+    template_name = 'catalog/delete.html'
+    slug_url_kwarg = 'product_slug'
+    success_url = reverse_lazy('catalog:home_url')
+
+
+class ProductCreateView(StaffProfileRequiredMixin, CreateView):
+    model = ProductModel
+    template_name = 'catalog/create.html'
+    slug_url_kwarg = 'product_slug'
+    fields = '__all__'
+

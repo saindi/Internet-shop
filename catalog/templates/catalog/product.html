@@ -39,4 +39,11 @@
         </div>
     </div>
 
+    {% if user.is_staff %}
+        <div class="container p-0 mt-4">
+            <a href="{% url 'catalog:product_update_url' product_slug=product.slug %}" class="btn btn-success btn-lg">Update</a>
+            <a href="{% url 'catalog:product_delete_url' product_slug=product.slug %}" class="btn btn-danger btn-lg">Delete</a>
+        </div>
+    {% endif %}
+
 {% endblock %}
