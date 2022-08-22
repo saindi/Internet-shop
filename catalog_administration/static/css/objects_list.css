@@ -1,0 +1,10 @@
+.photo-container {
+    height: 100px;
+    width: 200px;
+}
+
+.photo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

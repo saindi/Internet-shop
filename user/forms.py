@@ -1,67 +1,52 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.contrib.auth import authenticate
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from user.models import UserModel
 
 
-class SignInForm(forms.Form):
+class SignInForm(AuthenticationForm):
     username = forms.CharField(
-        label=False,
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Username"}
         )
     )
 
     password = forms.CharField(
-        label=False,
         widget=forms.PasswordInput(
             attrs={"class": "form-control", "placeholder": "Password"}
         )
     )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.user = None
 
-    def clean(self):
-        username = self.cleaned_data["username"]
-        password = self.cleaned_data["password"]
-
-        self.user = authenticate(username=username, password=password)
-
-        if self.user is None:
-            raise ValidationError("Неправильне ім'я користувача або пароль")
-
-
-class SignUpForm(forms.Form):
+class SignUpForm(forms.ModelForm):
     username = forms.CharField(
-        label=False,
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Username"}
         )
     )
 
-    email = forms.CharField(
-        label=False,
-        widget=forms.EmailInput(
+    email = forms.EmailField(
+        widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Email"}
         )
     )
 
     password1 = forms.CharField(
-        label=False,
         widget=forms.PasswordInput(
             attrs={"class": "form-control", "placeholder": "Password"}
         )
     )
 
     password2 = forms.CharField(
-        label=False,
         widget=forms.PasswordInput(
             attrs={"class": "form-control", "placeholder": "Confirm password"}
         )
     )
+
+    class Meta:
+        model = UserModel
+        fields = ['username', 'email', 'password1', 'password2']
 
     def clean_username(self):
         username = self.cleaned_data["username"]
@@ -86,14 +71,12 @@ class SignUpForm(forms.Form):
         if password1 != password2:
             raise ValidationError("Паролі не однакові")
 
-    def create_user(self):
-        username = self.cleaned_data["username"]
-        email = self.cleaned_data["email"]
-        password = self.cleaned_data["password1"]
-
-        UserModel.objects.create_user(username=username,
-                                      email=email,
-                                      password=password)
+    def save(self, commit=True):
+        UserModel.objects.create_user(
+            username=self.cleaned_data["username"],
+            email=self.cleaned_data["email"],
+            password=self.cleaned_data["password1"]
+        )
 
 
 class EditUserDataForm(forms.ModelForm):
@@ -129,7 +112,7 @@ class EditUserPasswordForm(forms.ModelForm):
 
     class Meta:
         model = UserModel
-        fields = ['password']
+        fields = ['password', 'password2']
         widgets = {
             'password': forms.PasswordInput(attrs={"class": "form-control", "placeholder": "New password"}),
         }
@@ -141,6 +124,6 @@ class EditUserPasswordForm(forms.ModelForm):
         if password != password2:
             raise ValidationError("Паролі не однакові")
 
-    def change_password(self):
+    def save(self, **kwargs):
         self.instance.set_password(self.cleaned_data["password"])
         self.instance.save()

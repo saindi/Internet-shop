@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href=" {% static '/css/models_list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <h2 class="text-center m-4">Адмін панель каталогу</h2>
+
+    <div class="list-group">
+
+        <a href="{% url 'catalog_administration:category_list_url' %}"
+           class="list-group-item list-group-item-action text-center mb-3">
+            Категорії
+        </a>
+
+        <a href="{% url 'catalog_administration:product_list_url' %}"
+           class="list-group-item list-group-item-action text-center mb-3">
+            Товари
+        </a>
+
+    </div>
+
+{% endblock %}

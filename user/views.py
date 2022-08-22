@@ -1,95 +1,73 @@
-from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
+from mysite import settings
 from user.forms import SignUpForm, SignInForm, EditUserDataForm, EditUserPasswordForm
 from user.models import UserModel
 
-
-@login_required()
-def user_view(request: HttpRequest) -> HttpResponse:
-    return render(request, 'user/user.html')
+from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 
 
-def signin_view(request: HttpRequest) -> HttpResponse:
-    if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse_lazy('user:profile_url'))
-
-    if request.method == "POST":
-        form = SignInForm(request.POST)
-
-        if form.is_valid():
-            login(request, form.user)
-            if 'next' in request.GET:
-                return HttpResponseRedirect(request.GET['next'])
-            else:
-                return HttpResponseRedirect(reverse_lazy('catalog:home_url'))
-    else:
-        form = SignInForm()
-
-    return render(request, 'user/signin.html', {"form": form})
+class WithoutLoginRequiredMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+        return super(WithoutLoginRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
-def signup_view(request: HttpRequest) -> HttpResponse:
-    if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse_lazy('user:profile_url'))
-
-    if request.method == "POST":
-        form = SignUpForm(request.POST)
-
-        if form.is_valid():
-            form.create_user()
-            return HttpResponseRedirect(reverse_lazy('user:signin_url'))
-    else:
-        form = SignUpForm()
-
-    return render(request, 'user/signup.html', {"form": form})
+class UserView(LoginRequiredMixin, TemplateView):
+    template_name = 'user/user.html'
 
 
-@login_required()
-def logout_view(request: HttpRequest) -> HttpResponse:
-    logout(request)
-
-    return HttpResponseRedirect(reverse_lazy('catalog:home_url'))
+class SignInView(WithoutLoginRequiredMixin, LoginView):
+    template_name = 'user/signin.html'
+    form_class = SignInForm
 
 
-@login_required()
-def deactivation_user_view(request: HttpRequest) -> HttpResponse:
-    user = UserModel.objects.get(username=request.user.username)
+class SignUpView(WithoutLoginRequiredMixin, CreateView):
+    model = UserModel
+    template_name = 'user/signup.html'
+    form_class = SignUpForm
 
-    user.is_active = False
-    user.save()
-
-    logout(request)
-
-    return HttpResponseRedirect(reverse_lazy('catalog:home_url'))
+    def get_success_url(self):
+        return reverse_lazy('user:signin_url')
 
 
-@login_required()
-def edit_user_data_view(request: HttpRequest) -> HttpResponse:
-    if request.method == "POST":
-        form = EditUserDataForm(request.POST, request.FILES, instance=request.user)
+class EditUserDataView(LoginRequiredMixin, UpdateView):
+    model = UserModel
+    form_class = EditUserDataForm
+    template_name = 'user/edit_user_data.html'
 
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse_lazy('user:profile_url'))
-    else:
-        form = EditUserDataForm(instance=request.user)
-
-    return render(request, 'user/edit_user_data.html', {"form": form})
+    def get_object(self, **kwargs):
+        return self.request.user
 
 
-@login_required()
-def edit_user_password_view(request: HttpRequest) -> HttpResponse:
-    if request.method == "POST":
-        form = EditUserPasswordForm(request.POST, instance=request.user)
+class EditUserPasswordView(LoginRequiredMixin, UpdateView):
+    model = UserModel
+    form_class = EditUserPasswordForm
+    template_name = 'user/edit_user_password.html'
 
-        if form.is_valid():
-            form.change_password()
-            return HttpResponseRedirect(reverse_lazy('user:profile_url'))
-    else:
-        form = EditUserPasswordForm(instance=request.user)
+    def get_object(self, **kwargs):
+        return self.request.user
 
-    return render(request, 'user/edit_user_password.html', {"form": form})
+    def get_success_url(self):
+        return reverse_lazy('user:signin_url')
+
+
+class DeactivationUserView(LoginRequiredMixin, DeleteView):
+    model = UserModel
+    template_name = 'user/deactivation_user.html'
+
+    def get_object(self, **kwargs):
+        return self.request.user
+
+    def form_valid(self, form):
+        self.object.is_active = False
+        self.object.save()
+
+        logout(self.request)
+
+        return HttpResponseRedirect(reverse_lazy('catalog:home_url'))
