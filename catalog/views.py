@@ -94,5 +94,4 @@ class ProductDeleteView(StaffProfileRequiredMixin, DeleteView):
 class ProductCreateView(StaffProfileRequiredMixin, CreateView):
     model = ProductModel
     template_name = 'catalog/create.html'
-    slug_url_kwarg = 'product_slug'
     fields = '__all__'
