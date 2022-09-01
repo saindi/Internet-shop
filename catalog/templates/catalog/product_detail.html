@@ -32,18 +32,17 @@
 
 
                 {% else %}
-                    <a href="#" class="btn btn-primary btn-lg">Купить</a>
+                    <form action="" class="form-inline">
+                        <input type="number" min="0" class ="form-control mr-2 w-25">
+                        <a href="#" class="btn btn-success">Купить</a>
+                    </form>
+
+
                 {% endif %}
             </div>
 
         </div>
     </div>
 
-    {% if user.is_staff %}
-        <div class="container mt-4">
-            <a href="{% url 'catalog:product_update_url' product_slug=product.slug %}" class="btn btn-success btn-lg">Update</a>
-            <a href="{% url 'catalog:product_delete_url' product_slug=product.slug %}" class="btn btn-danger btn-lg">Delete</a>
-        </div>
-    {% endif %}
 
 {% endblock %}

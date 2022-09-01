@@ -4,18 +4,12 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
-from mysite import settings
 from user.forms import SignUpForm, SignInForm, EditUserDataForm, EditUserPasswordForm
 from user.models import UserModel
 
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 
-
-class WithoutLoginRequiredMixin(object):
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
-        return super(WithoutLoginRequiredMixin, self).dispatch(request, *args, **kwargs)
+from utils import WithoutLoginRequiredMixin
 
 
 class UserView(LoginRequiredMixin, TemplateView):
