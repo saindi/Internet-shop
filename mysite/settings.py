@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     'catalog.apps.CatalogConfig',
     'user.apps.UserConfig',
+    'cart.apps.CartConfig',
+    'order.apps.OrderConfig',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +140,5 @@ AUTH_USER_MODEL = "user.UserModel"
 LOGIN_URL = '/sign-in/'
 
 LOGIN_REDIRECT_URL = '/user/'
+
+CART_SESSION_ID = 'cart'

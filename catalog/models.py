@@ -84,6 +84,3 @@ class ProductModel(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy('catalog:product_detail_url', kwargs={'product_slug': self.slug})
-
-
-# class Purchase(models.Model):

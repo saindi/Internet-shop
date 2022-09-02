@@ -26,46 +26,23 @@
 
                             <div class="d-flex justify-content-center mb-2">
                                 <a href="{% url 'user:edit_data_url' %}" type="button"
-                                   class="btn btn-primary m-1 font-weight-normal">Редагувати дані</a>
+                                   class="btn btn-primary m-1 font-weight-normal btn-wight">Редагувати дані</a>
                             </div>
 
                             <div class="d-flex justify-content-center mb-2">
-                                <a href="{% url 'user:edit_password_url' %}" type="button" class="btn btn-primary m-1">Змінити
+                                <a href="{% url 'user:edit_password_url' %}" type="button" class="btn btn-primary m-1 btn-wight">Змінити
                                     пароль</a>
                             </div>
 
                             <div class="d-flex justify-content-center mb-2">
-                                <a href="{% url 'user:deactivation_url' %}" type="button" class="btn btn-danger m-1">Деактивація</a>
+                                <a href="{% url 'user:deactivation_url' %}" type="button" class="btn btn-danger m-1 btn-wight">Деактивація</a>
                             </div>
 
 
                         </div>
                     </div>
 
-                    {% if user.is_staff %}
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h5 class="text-center font-weight-normal">
-                                    Staff panel
-                                </h5>
-
-
-                                <div class="d-flex justify-content-center mb-2">
-                                    <a href="{% url 'catalog:staff_category_list_url' %}" type="button"
-                                       class="btn btn-success m-1">Category</a>
-                                </div>
-
-                                <div class="d-flex justify-content-center mb-2">
-                                    <a href="{% url 'catalog:staff_product_delete_url' %}" type="button"
-                                       class="btn btn-success m-1">Product</a>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    <div class="card mb-4 mb-lg-0">
+                    <div class="card mb-4">
                         <div class="card-body p-0">
 
                             <div class="card-body">
@@ -121,18 +98,47 @@
                             </div>
                         </div>
                     </div>
+
+                    {% if user.is_staff %}
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-center font-weight-normal">
+                                    Staff panel
+                                </h5>
+
+
+                                <div class="d-flex justify-content-center mb-2">
+                                    <a href="{% url 'catalog:staff_category_list_url' %}" type="button"
+                                       class="btn btn-success m-1 btn-wight">Category</a>
+                                </div>
+
+                                <div class="d-flex justify-content-center mb-2">
+                                    <a href="{% url 'catalog:staff_product_delete_url' %}" type="button"
+                                       class="btn btn-success m-1 btn-wight">Product</a>
+                                </div>
+
+                                <div class="d-flex justify-content-center mb-2">
+                                    <a href="{% url 'order:cancellations_list' %}" type="button"
+                                       class="btn btn-success m-1 btn-wight">Скасування</a>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    {% endif %}
+
                 </div>
 
                 <div class="col-lg-8">
-                    <div class="card mb-4 height-long">
-                        <div class="card-body">
+                    <div class="card mb-4">
+                        <div class="card-body card-calc">
 
                             <h4 class="text-center font-weight-normal">
                                 Мої покупки
                             </h4>
                             <hr>
 
-                            {#  список покупок сюда #}
+                            {% include 'order/_orders.html' %}
 
                         </div>
                     </div>

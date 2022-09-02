@@ -3,6 +3,7 @@ from catalog.models import CategoryModel, ProductModel
 from django.urls import reverse_lazy
 from utils import StaffProfileRequiredMixin
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView, RedirectView
+from cart.forms import CartAddProductForm
 
 
 class HomeView(RedirectView):
@@ -66,6 +67,12 @@ class ProductDetailView(DetailView):
     slug_url_kwarg = 'product_slug'
     template_name = 'catalog/product_detail.html'
     context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart_product_form'] = CartAddProductForm()
+
+        return context
 
 
 class ProductUpdateView(StaffProfileRequiredMixin, UpdateView):

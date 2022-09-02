@@ -32,9 +32,12 @@
 
 
                 {% else %}
-                    <form action="" class="form-inline">
-                        <input type="number" min="0" class ="form-control mr-2 w-25">
-                        <a href="#" class="btn btn-success">Купить</a>
+                    <form action="{% url 'cart:add' product_slug=product.slug %}"  class="form-inline" method="post">
+                        {% csrf_token %}
+
+                        {{ cart_product_form }}
+
+                        <input type="submit" class="btn btn-success" value="Add to cart">
                     </form>
 
 

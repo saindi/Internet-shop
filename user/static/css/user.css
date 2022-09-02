@@ -1,4 +1,4 @@
-.btn {
+.btn-wight {
     width: 100%;
 }
 
@@ -12,4 +12,25 @@
 
 .height-long {
     height: 100%
+}
+
+.photo-container {
+    height: 100px;
+}
+
+.photo {
+    height: 100%;
+    width: 100px;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+.orders {
+    background-color: #eee;
+}
+
+.card-calc {
+    height: calc(686px);
+    overflow-x: hidden;
+    overflow-y: auto;
 }
