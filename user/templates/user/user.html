@@ -13,7 +13,7 @@
 
             <h2 class="text-center m-4">Сторінка покупця</h2>
 
-            <div class="row mb-4">
+            <div class="row">
                 <div class="col-lg-4">
 
                     <div class="card mb-4">
@@ -30,12 +30,14 @@
                             </div>
 
                             <div class="d-flex justify-content-center mb-2">
-                                <a href="{% url 'user:edit_password_url' %}" type="button" class="btn btn-primary m-1 btn-wight">Змінити
+                                <a href="{% url 'user:edit_password_url' %}" type="button"
+                                   class="btn btn-primary m-1 btn-wight">Змінити
                                     пароль</a>
                             </div>
 
                             <div class="d-flex justify-content-center mb-2">
-                                <a href="{% url 'user:deactivation_url' %}" type="button" class="btn btn-danger m-1 btn-wight">Деактивація</a>
+                                <a href="{% url 'user:deactivation_url' %}" type="button"
+                                   class="btn btn-danger m-1 btn-wight">Деактивація</a>
                             </div>
 
 
@@ -98,39 +100,10 @@
                             </div>
                         </div>
                     </div>
-
-                    {% if user.is_staff %}
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="text-center font-weight-normal">
-                                    Staff panel
-                                </h5>
-
-
-                                <div class="d-flex justify-content-center mb-2">
-                                    <a href="{% url 'catalog:staff_category_list_url' %}" type="button"
-                                       class="btn btn-success m-1 btn-wight">Category</a>
-                                </div>
-
-                                <div class="d-flex justify-content-center mb-2">
-                                    <a href="{% url 'catalog:staff_product_delete_url' %}" type="button"
-                                       class="btn btn-success m-1 btn-wight">Product</a>
-                                </div>
-
-                                <div class="d-flex justify-content-center mb-2">
-                                    <a href="{% url 'order:cancellations_list' %}" type="button"
-                                       class="btn btn-success m-1 btn-wight">Скасування</a>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    {% endif %}
-
                 </div>
 
                 <div class="col-lg-8">
-                    <div class="card mb-4">
+                    <div class="card">
                         <div class="card-body card-calc">
 
                             <h4 class="text-center font-weight-normal">
@@ -144,6 +117,33 @@
                     </div>
                 </div>
             </div>
+
+            {% if user.is_staff %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="text-center font-weight-normal">
+                            Staff panel
+                        </h5>
+
+                        <div class="d-flex justify-content-center mb-2">
+                            <a href="{% url 'catalog:staff_category_list_url' %}" type="button"
+                               class="btn btn-success m-1 w-25">Category</a>
+                        </div>
+
+                        <div class="d-flex justify-content-center mb-2">
+                            <a href="{% url 'catalog:staff_product_delete_url' %}" type="button"
+                               class="btn btn-success m-1 w-25">Product</a>
+                        </div>
+
+                        <div class="d-flex justify-content-center mb-2">
+                            <a href="{% url 'order:cancellations_list' %}" type="button"
+                               class="btn btn-success m-1 w-25">Скасування</a>
+                        </div>
+
+                    </div>
+                </div>
+            {% endif %}
+
         </div>
     </section>
 {% endblock %}

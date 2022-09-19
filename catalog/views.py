@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from catalog.models import CategoryModel, ProductModel
 from django.urls import reverse_lazy
-from utils import StaffProfileRequiredMixin
+from mysite.utils import StaffProfileRequiredMixin
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView, RedirectView
 from cart.forms import CartAddProductForm
 

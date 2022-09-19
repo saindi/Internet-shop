@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from user.forms import SignUpForm, SignInForm, EditUserDataForm, EditUserPasswordForm
 from user.models import UserModel
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
-from utils import WithoutLoginRequiredMixin
+from mysite.utils import WithoutLoginRequiredMixin
 from order.models import OrderModel, OrderItemModel
 
 

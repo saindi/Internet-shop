@@ -3,12 +3,11 @@ from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
-from catalog.models import ProductModel
 from order.models import OrderItemModel, OrderModel, CancellationModel
 from cart.cart import Cart
 
 from django.contrib.admin.views.decorators import staff_member_required
-from mysite.settings import LOGIN_URL
+from django.conf import settings
 
 
 @login_required
@@ -60,7 +59,7 @@ def order_create_view(request):
     return HttpResponseRedirect(reverse_lazy('user:profile_url'))
 
 
-@staff_member_required(login_url=LOGIN_URL)
+@staff_member_required(login_url=settings.LOGIN_URL)
 def cancellation_list_view(request: HttpRequest) -> HttpResponse:
     context = {"cancellations": CancellationModel.objects.all()}
 
@@ -85,7 +84,7 @@ def cancellation_create_view(request: HttpRequest, order_id: int) -> HttpRespons
     return HttpResponseRedirect(reverse_lazy('user:profile_url'))
 
 
-@staff_member_required(login_url=LOGIN_URL)
+@staff_member_required(login_url=settings.LOGIN_URL)
 def cancellation_confirm_view(request: HttpRequest, cancellation_id: int) -> HttpResponse:
     try:
         cancellation = CancellationModel.objects.get(id=cancellation_id)
@@ -108,7 +107,7 @@ def cancellation_confirm_view(request: HttpRequest, cancellation_id: int) -> Htt
     return HttpResponseRedirect(reverse_lazy('order:cancellations_list'))
 
 
-@staff_member_required(login_url=LOGIN_URL)
+@staff_member_required(login_url=settings.LOGIN_URL)
 def cancellation_cancel_view(request: HttpRequest, cancellation_id: int) -> HttpResponse:
     try:
         cancellation = CancellationModel.objects.get(id=cancellation_id)
