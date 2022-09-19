@@ -10,6 +10,8 @@ from catalog.views import (
     ProductUpdateView,
     ProductDeleteView,
     ProductCreateView,
+    StaffCategoryListView,
+    StaffProductListView,
 )
 
 
@@ -28,4 +30,8 @@ urlpatterns = [
     path('product/<slug:product_slug>/', ProductDetailView.as_view(), name="product_detail_url"),
     path('product/<slug:product_slug>/update/', ProductUpdateView.as_view(), name="product_update_url"),
     path('product/<slug:product_slug>/delete/', ProductDeleteView.as_view(), name="product_delete_url"),
+
+
+    path('staff/category/', StaffCategoryListView.as_view(), name="staff_category_list_url"),
+    path('staff/product/', StaffProductListView.as_view(), name="staff_product_delete_url"),
 ]

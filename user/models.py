@@ -13,6 +13,10 @@ class UserModel(AbstractUser):
         unique=True
     )
 
+    money = models.FloatField(
+        default=10000
+    )
+
     def __str__(self):
         return f"{self.username}"
 

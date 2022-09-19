@@ -3,23 +3,32 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-
-from mysite import settings
 from user.forms import SignUpForm, SignInForm, EditUserDataForm, EditUserPasswordForm
 from user.models import UserModel
-
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
-
-
-class WithoutLoginRequiredMixin(object):
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
-        return super(WithoutLoginRequiredMixin, self).dispatch(request, *args, **kwargs)
+from utils import WithoutLoginRequiredMixin
+from order.models import OrderModel, OrderItemModel
 
 
 class UserView(LoginRequiredMixin, TemplateView):
     template_name = 'user/user.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        orders = OrderModel.objects.filter(user=self.request.user)
+
+        context["orders"] = []
+        for order in orders:
+            context["orders"].append(
+                {
+                    "order": order,
+                    "products": OrderItemModel.objects.filter(order_id=order.id)
+                }
+            )
+
+        return context
+
 
 
 class SignInView(WithoutLoginRequiredMixin, LoginView):

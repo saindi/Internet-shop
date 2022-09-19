@@ -26,6 +26,7 @@ class CategoryModel(models.Model):
     class Meta:
         verbose_name = "Категорія"
         verbose_name_plural = "Категорії"
+        ordering = ["id"]
 
     def get_absolute_url(self):
         return reverse_lazy('catalog:category_list_url')
@@ -79,6 +80,7 @@ class ProductModel(models.Model):
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товари"
+        ordering = ["id"]
 
     def get_absolute_url(self):
         return reverse_lazy('catalog:product_detail_url', kwargs={'product_slug': self.slug})

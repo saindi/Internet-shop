@@ -12,3 +12,11 @@
     background-color: #c8cbcf;
     border-color: #c8cbcf
 }
+
+.quantity {
+    width: 50px;
+    height: 40px;
+    border-radius: 5px;
+    text-align: center;
+}
+

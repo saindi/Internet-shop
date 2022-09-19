@@ -1,16 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView, RedirectView
 from catalog.models import CategoryModel, ProductModel
-from mysite import settings
 from django.urls import reverse_lazy
-
-
-class StaffProfileRequiredMixin(object):
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_staff:
-            return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
-        return super(StaffProfileRequiredMixin, self).dispatch(request, *args, **kwargs)
+from utils import StaffProfileRequiredMixin
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView, RedirectView
+from cart.forms import CartAddProductForm
 
 
 class HomeView(RedirectView):
@@ -49,9 +42,6 @@ class ProductListView(ListView):
     context_object_name = 'products'
     allow_empty = False
 
-    def get_queryset(self):
-        return ProductModel.objects.filter(category__slug=self.kwargs['category_slug'])
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["category"] = CategoryModel.objects.get(slug=self.kwargs['category_slug'])
@@ -60,6 +50,9 @@ class ProductListView(ListView):
             context["price_range"] = [0, 50000]
 
         return context
+
+    def get_queryset(self):
+        return ProductModel.objects.filter(category__slug=self.kwargs['category_slug'])
 
     def post(self, request, *args, **kwargs):
         price_range = request.POST.get('price_range').split(";")
@@ -74,6 +67,12 @@ class ProductDetailView(DetailView):
     slug_url_kwarg = 'product_slug'
     template_name = 'catalog/product_detail.html'
     context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart_product_form'] = CartAddProductForm()
+
+        return context
 
 
 class ProductUpdateView(StaffProfileRequiredMixin, UpdateView):
@@ -95,3 +94,17 @@ class ProductCreateView(StaffProfileRequiredMixin, CreateView):
     model = ProductModel
     template_name = 'catalog/create.html'
     fields = '__all__'
+
+
+class StaffCategoryListView(StaffProfileRequiredMixin, ListView):
+    model = CategoryModel
+    template_name = 'catalog/staff_category_list.html'
+    context_object_name = 'categories'
+    paginate_by = 10
+
+
+class StaffProductListView(StaffProfileRequiredMixin, ListView):
+    model = ProductModel
+    template_name = 'catalog/staff_product_list.html'
+    context_object_name = 'products'
+    paginate_by = 10
