@@ -2,14 +2,14 @@ from django.http import HttpResponseRedirect
 from mysite import settings
 
 
-class WithoutLoginRequiredMixin(object):
+class WithoutLoginRequiredMixin:
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
         return super(WithoutLoginRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
-class StaffProfileRequiredMixin(object):
+class StaffProfileRequiredMixin:
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_staff:
             return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
