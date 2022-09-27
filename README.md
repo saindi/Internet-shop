@@ -1,8 +1,30 @@
-# Homework 23
-Завдання здається у вигляді Pull Request.
+# Internet shop
+This is a training project. This is done using the Django framework and demonstrates its abilities. 
 
-Створити серіалізатори для моделей модульного завдання блоку Django.
+<h2>
+  Getting started
+</h2>
 
-Як серіалізатори повинні бути створені для моделей товару, користувача та покупки.
+Download the code base on your local machine. You may prefer to use virtual environment to separate the project's dependencies from other packages you have installed.
 
-Інщі моделі - за бажанням.
+To install dependencies use pip or poetry:
+
+```
+pip install -r requirements.txt
+```
+```
+poetry install
+```
+
+After downloading the project, set the required environment variables.
+
+To run the project do:
+```
+python manage.py runserver
+```
+The output should look like:
+```
+Starting development server at http://127.0.0.1:8000/
+```
+Visit the printed out address in your web-browser to see the running webapp.
+
