@@ -5,6 +5,9 @@ from mysite.utils import StaffProfileRequiredMixin
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView, RedirectView
 from cart.forms import CartAddProductForm
 
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from catalog.serialiers import ProductSerializers, CategorySerializers
+
 
 class HomeView(RedirectView):
     pattern_name = 'catalog:category_list_url'
@@ -108,3 +111,23 @@ class StaffProductListView(StaffProfileRequiredMixin, ListView):
     template_name = 'catalog/staff_product_list.html'
     context_object_name = 'products'
     paginate_by = 10
+
+
+class ProductListCreateAPIView(ListCreateAPIView):
+    serializer_class = ProductSerializers
+    queryset = ProductModel.objects.all()
+
+
+class ProductRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = ProductSerializers
+    queryset = ProductModel.objects.all()
+
+
+class CategoryListCreateAPIView(ListCreateAPIView):
+    serializer_class = CategorySerializers
+    queryset = CategoryModel.objects.all()
+
+
+class CategoryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = CategorySerializers
+    queryset = CategoryModel.objects.all()

@@ -9,6 +9,9 @@ from django.views.generic import TemplateView, CreateView, UpdateView, DeleteVie
 from mysite.utils import WithoutLoginRequiredMixin
 from order.models import OrderModel, OrderItemModel
 
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from user.serialiers import UserSerializers
+
 
 class UserView(LoginRequiredMixin, TemplateView):
     template_name = 'user/user.html'
@@ -80,3 +83,13 @@ class DeactivationUserView(LoginRequiredMixin, DeleteView):
         logout(self.request)
 
         return HttpResponseRedirect(reverse_lazy('catalog:home_url'))
+
+
+class UserListCreateAPIView(ListCreateAPIView):
+    serializer_class = UserSerializers
+    queryset = UserModel.objects.all()
+
+
+class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = UserSerializers
+    queryset = UserModel.objects.all()

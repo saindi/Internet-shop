@@ -9,8 +9,6 @@ class ProductSerializers(serializers.ModelSerializer):
 
 
 class CategorySerializers(serializers.ModelSerializer):
-    products = ProductSerializers(many=True)
-
     class Meta:
         model = CategoryModel
         fields = "__all__"
