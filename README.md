@@ -16,7 +16,6 @@ pip install -r requirements.txt
 poetry install
 ```
 
-After downloading the project, set the required environment variables.
 
 To run the project do:
 ```
