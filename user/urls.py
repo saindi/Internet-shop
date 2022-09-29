@@ -15,6 +15,20 @@ urlpatterns = [
     path('sign-up/', views.SignUpView.as_view(), name="signup_url"),
     path('logout/', LogoutView.as_view(next_page='catalog:home_url'), name='logout_url'),
 
-    path('api/user/', views.UserListCreateAPIView.as_view(), name="api_users"),
-    path('api/user/<int:pk>/', views.UserRetrieveUpdateDestroyAPIView.as_view(), name="api_user"),
+    path('api/user/',
+         views.UserViewSet.as_view(
+             {
+                 'get': 'list',
+                 'post': 'create'
+             }),
+         name="api_users"),
+
+    path('api/user/<int:pk>/',
+         views.UserViewSet.as_view(
+             {
+                 'get': 'retrieve',
+                 'put': 'update',
+                 'delete': 'destroy'
+             }),
+         name="api_user"),
 ]

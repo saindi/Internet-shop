@@ -5,7 +5,7 @@ from mysite.utils import StaffProfileRequiredMixin
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView, RedirectView
 from cart.forms import CartAddProductForm
 
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 from catalog.serialiers import ProductSerializers, CategorySerializers
 
 
@@ -113,21 +113,11 @@ class StaffProductListView(StaffProfileRequiredMixin, ListView):
     paginate_by = 10
 
 
-class ProductListCreateAPIView(ListCreateAPIView):
+class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializers
     queryset = ProductModel.objects.all()
 
 
-class ProductRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = ProductSerializers
-    queryset = ProductModel.objects.all()
-
-
-class CategoryListCreateAPIView(ListCreateAPIView):
-    serializer_class = CategorySerializers
-    queryset = CategoryModel.objects.all()
-
-
-class CategoryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySerializers
     queryset = CategoryModel.objects.all()

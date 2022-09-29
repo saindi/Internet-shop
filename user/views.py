@@ -9,7 +9,7 @@ from django.views.generic import TemplateView, CreateView, UpdateView, DeleteVie
 from mysite.utils import WithoutLoginRequiredMixin
 from order.models import OrderModel, OrderItemModel
 
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 from user.serialiers import UserSerializers
 
 
@@ -31,7 +31,6 @@ class UserView(LoginRequiredMixin, TemplateView):
             )
 
         return context
-
 
 
 class SignInView(WithoutLoginRequiredMixin, LoginView):
@@ -85,11 +84,6 @@ class DeactivationUserView(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect(reverse_lazy('catalog:home_url'))
 
 
-class UserListCreateAPIView(ListCreateAPIView):
-    serializer_class = UserSerializers
-    queryset = UserModel.objects.all()
-
-
-class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+class UserViewSet(ModelViewSet):
     serializer_class = UserSerializers
     queryset = UserModel.objects.all()

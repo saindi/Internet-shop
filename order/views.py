@@ -9,8 +9,9 @@ from cart.cart import Cart
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
 
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 from order.serialiers import OrderItemSerializers, OrderSerializers, CancellationSerializers
+
 
 @login_required
 def order_create_view(request):
@@ -124,31 +125,18 @@ def cancellation_cancel_view(request: HttpRequest, cancellation_id: int) -> Http
     return HttpResponseRedirect(reverse_lazy('order:cancellations_list'))
 
 
-class OrderItemListCreateAPIView(ListCreateAPIView):
+class OrderItemViewSet(ModelViewSet):
     serializer_class = OrderItemSerializers
     queryset = OrderItemModel.objects.all()
 
 
-class OrderItemRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = OrderItemSerializers
-    queryset = OrderItemModel.objects.all()
-
-
-class OrderListCreateAPIView(ListCreateAPIView):
+class OrderViewSet(ModelViewSet):
     serializer_class = OrderSerializers
     queryset = OrderModel.objects.all()
 
 
-class OrderRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = OrderSerializers
-    queryset = OrderModel.objects.all()
-
-
-class CancellationListCreateAPIView(ListCreateAPIView):
+class CancellationViewSet(ModelViewSet):
     serializer_class = CancellationSerializers
     queryset = CancellationModel.objects.all()
 
 
-class CancellationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = CancellationSerializers
-    queryset = CancellationModel.objects.all()
