@@ -39,11 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken',
 
     'catalog.apps.CatalogConfig',
     'user.apps.UserConfig',
     'cart.apps.CartConfig',
     'order.apps.OrderConfig',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -146,7 +148,11 @@ LOGIN_REDIRECT_URL = '/user/'
 CART_SESSION_ID = 'cart'
 
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
+    'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
-    )
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }
