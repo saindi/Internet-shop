@@ -144,3 +144,9 @@ LOGIN_URL = '/sign-in/'
 LOGIN_REDIRECT_URL = '/user/'
 
 CART_SESSION_ID = 'cart'
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}

@@ -4,15 +4,13 @@ from order.models import OrderModel, OrderItemModel, CancellationModel
 
 class OrderItemSerializers(serializers.ModelSerializer):
     class Meta:
-        model = OrderModel
+        model = OrderItemModel
         fields = "__all__"
 
 
 class OrderSerializers(serializers.ModelSerializer):
-    order_items = OrderItemSerializers(many=True)
-
     class Meta:
-        model = OrderItemModel
+        model = OrderModel
         fields = "__all__"
 
 
