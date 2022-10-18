@@ -21,39 +21,4 @@ urlpatterns = [
 
     path('staff/category/', views.StaffCategoryListView.as_view(), name="staff_category_list_url"),
     path('staff/product/', views.StaffProductListView.as_view(), name="staff_product_delete_url"),
-
-
-    path('api/product/',
-         views.ProductViewSet.as_view(
-             {
-                 'get': 'list',
-                 'post': 'create'
-             }),
-         name="api_products"),
-
-    path('api/product/<int:pk>/',
-         views.ProductViewSet.as_view(
-             {
-                 'get': 'retrieve',
-                 'put': 'update',
-                 'delete': 'destroy'
-             }),
-         name="api_product"),
-
-    path('api/category/',
-         views.CategoryViewSet.as_view(
-             {
-                 'get': 'list',
-                 'post': 'create'
-             }),
-         name="api_categories"),
-
-    path('api/category/<int:pk>/',
-         views.CategoryViewSet.as_view(
-             {
-                 'get': 'retrieve',
-                 'put': 'update',
-                 'delete': 'destroy'
-             }),
-         name="api_category"),
 ]
