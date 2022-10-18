@@ -66,7 +66,8 @@ class ProductModel(models.Model):
     )
 
     img = models.ImageField(
-        upload_to='catalog/img'
+        upload_to='catalog/img',
+        default='category/img/logo.png'
     )
 
     category = models.ForeignKey(
